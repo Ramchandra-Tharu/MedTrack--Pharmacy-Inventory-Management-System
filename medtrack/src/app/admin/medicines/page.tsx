@@ -289,13 +289,13 @@ export default function MedicinesPage() {
         <div className="flex flex-col sm:flex-row gap-3">
           {/* Search */}
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by name or generic name..."
-              className="w-full pl-10 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/30 focus:border-[#188FA7]"
+              className="w-full pl-10 pr-4 py-2.5 text-sm font-medium text-gray-900 bg-white placeholder:text-gray-400 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/40 focus:border-[#188FA7] shadow-2xs"
             />
           </div>
 
@@ -304,14 +304,14 @@ export default function MedicinesPage() {
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className="appearance-none pl-4 pr-9 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-[#188FA7]/30 focus:border-[#188FA7] text-gray-600"
+              className="appearance-none pl-4 pr-9 py-2.5 text-sm font-medium text-gray-900 border border-gray-300 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-[#188FA7]/40 focus:border-[#188FA7] shadow-2xs"
             >
-              <option value="">All Categories</option>
+              <option value="" className="text-gray-500">All Categories</option>
               {CATEGORIES.map((c) => (
-                <option key={c} value={c}>{c}</option>
+                <option key={c} value={c} className="text-gray-900">{c}</option>
               ))}
             </select>
-            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+            <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
           </div>
 
           {/* Status filter */}
@@ -319,13 +319,13 @@ export default function MedicinesPage() {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="appearance-none pl-4 pr-9 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-[#188FA7]/30 focus:border-[#188FA7] text-gray-600"
+              className="appearance-none pl-4 pr-9 py-2.5 text-sm font-medium text-gray-900 border border-gray-300 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-[#188FA7]/40 focus:border-[#188FA7] shadow-2xs"
             >
-              <option value="">All Status</option>
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
+              <option value="" className="text-gray-500">All Status</option>
+              <option value="active" className="text-gray-900">Active</option>
+              <option value="inactive" className="text-gray-900">Inactive</option>
             </select>
-            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+            <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
           </div>
 
           {(search || categoryFilter || statusFilter) && (
@@ -478,83 +478,83 @@ export default function MedicinesPage() {
             <form onSubmit={handleSubmit} className="p-6 space-y-5">
               {/* Name */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                <label className="block text-sm font-semibold text-gray-900 mb-1.5">
                   Medicine Name <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
-                  <Pill className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <Pill className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                   <input
                     type="text"
                     required
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                     placeholder="e.g. Paracetamol 500mg"
-                    className="w-full pl-10 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/30 focus:border-[#188FA7]"
+                    className="w-full pl-10 pr-4 py-2.5 text-sm font-medium text-gray-900 bg-white placeholder:text-gray-400 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/40 focus:border-[#188FA7] shadow-2xs"
                   />
                 </div>
               </div>
 
               {/* Generic Name */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1.5">Generic Name</label>
+                <label className="block text-sm font-semibold text-gray-900 mb-1.5">Generic Name</label>
                 <div className="relative">
-                  <FlaskConical className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <FlaskConical className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                   <input
                     type="text"
                     value={form.genericName}
                     onChange={(e) => setForm({ ...form, genericName: e.target.value })}
                     placeholder="e.g. Acetaminophen"
-                    className="w-full pl-10 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/30 focus:border-[#188FA7]"
+                    className="w-full pl-10 pr-4 py-2.5 text-sm font-medium text-gray-900 bg-white placeholder:text-gray-400 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/40 focus:border-[#188FA7] shadow-2xs"
                   />
                 </div>
               </div>
 
               {/* Category */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                <label className="block text-sm font-semibold text-gray-900 mb-1.5">
                   Category <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
-                  <Tag className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <Tag className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                   <select
                     required
                     value={form.category}
                     onChange={(e) => setForm({ ...form, category: e.target.value })}
-                    className="w-full appearance-none pl-10 pr-9 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-[#188FA7]/30 focus:border-[#188FA7] text-gray-700"
+                    className="w-full appearance-none pl-10 pr-9 py-2.5 text-sm font-medium text-gray-900 bg-white border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/40 focus:border-[#188FA7] shadow-2xs"
                   >
-                    <option value="">Select category</option>
-                    {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
+                    <option value="" className="text-gray-500">Select category</option>
+                    {CATEGORIES.map((c) => <option key={c} value={c} className="text-gray-900">{c}</option>)}
                   </select>
-                  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+                  <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
                 </div>
               </div>
 
               {/* Manufacturer */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1.5">Manufacturer</label>
+                <label className="block text-sm font-semibold text-gray-900 mb-1.5">Manufacturer</label>
                 <div className="relative">
-                  <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <Building2 className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                   <input
                     type="text"
                     value={form.manufacturer}
                     onChange={(e) => setForm({ ...form, manufacturer: e.target.value })}
                     placeholder="e.g. Sun Pharma"
-                    className="w-full pl-10 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/30 focus:border-[#188FA7]"
+                    className="w-full pl-10 pr-4 py-2.5 text-sm font-medium text-gray-900 bg-white placeholder:text-gray-400 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/40 focus:border-[#188FA7] shadow-2xs"
                   />
                 </div>
               </div>
 
               {/* Description */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1.5">Description</label>
+                <label className="block text-sm font-semibold text-gray-900 mb-1.5">Description</label>
                 <div className="relative">
-                  <FileText className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
+                  <FileText className="absolute left-3.5 top-3 w-4 h-4 text-gray-500" />
                   <textarea
                     rows={3}
                     value={form.description}
                     onChange={(e) => setForm({ ...form, description: e.target.value })}
                     placeholder="Optional short description..."
-                    className="w-full pl-10 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/30 focus:border-[#188FA7] resize-none"
+                    className="w-full pl-10 pr-4 py-2.5 text-sm font-medium text-gray-900 bg-white placeholder:text-gray-400 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/40 focus:border-[#188FA7] resize-none shadow-2xs"
                   />
                 </div>
               </div>

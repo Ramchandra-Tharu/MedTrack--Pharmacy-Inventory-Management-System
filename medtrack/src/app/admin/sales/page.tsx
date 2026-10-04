@@ -306,14 +306,14 @@ export default function SalesPOSPage() {
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
               <h2 className="text-base font-bold text-gray-800 mb-3">Add Medicine to Cart</h2>
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                 <input
                   type="text"
                   value={medSearch}
                   onChange={(e) => { setMedSearch(e.target.value); setShowMedList(true); }}
                   onFocus={() => setShowMedList(true)}
                   placeholder="Search medicine by name or generic name..."
-                  className="w-full pl-10 pr-4 py-3 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/30 focus:border-[#188FA7]"
+                  className="w-full pl-10 pr-4 py-3 text-sm font-medium text-gray-900 bg-white placeholder:text-gray-400 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/40 focus:border-[#188FA7] shadow-2xs"
                 />
                 {showMedList && medSearch && (
                   <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-xl z-30 max-h-64 overflow-y-auto">
@@ -512,19 +512,19 @@ export default function SalesPOSPage() {
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
             <div className="flex flex-col sm:flex-row gap-3 items-end">
               <div>
-                <label className="block text-xs font-semibold text-gray-500 mb-1.5">From Date</label>
+                <label className="block text-xs font-semibold text-gray-900 mb-1.5">From Date</label>
                 <div className="relative">
-                  <CalendarDays className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <CalendarDays className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                   <input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)}
-                    className="pl-10 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/30 focus:border-[#188FA7]" />
+                    className="pl-10 pr-4 py-2.5 text-sm font-medium text-gray-900 bg-white border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/40 focus:border-[#188FA7] shadow-2xs" />
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-semibold text-gray-500 mb-1.5">To Date</label>
+                <label className="block text-xs font-semibold text-gray-900 mb-1.5">To Date</label>
                 <div className="relative">
-                  <CalendarDays className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <CalendarDays className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                   <input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)}
-                    className="pl-10 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/30 focus:border-[#188FA7]" />
+                    className="pl-10 pr-4 py-2.5 text-sm font-medium text-gray-900 bg-white border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/40 focus:border-[#188FA7] shadow-2xs" />
                 </div>
               </div>
               {(dateFrom || dateTo) && (

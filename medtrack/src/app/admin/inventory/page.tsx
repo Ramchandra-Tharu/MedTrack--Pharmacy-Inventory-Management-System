@@ -303,35 +303,35 @@ export default function InventoryPage() {
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by batch number..."
-              className="w-full pl-10 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/30 focus:border-[#188FA7]"
+              className="w-full pl-10 pr-4 py-2.5 text-sm font-medium text-gray-900 bg-white placeholder:text-gray-400 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/40 focus:border-[#188FA7] shadow-2xs"
             />
           </div>
 
           <div className="relative">
             <select value={expiryFilter} onChange={(e) => setExpiryFilter(e.target.value)}
-              className="appearance-none pl-4 pr-9 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-[#188FA7]/30 focus:border-[#188FA7] text-gray-600">
-              <option value="">All Expiry</option>
-              <option value="expired">Expired</option>
-              <option value="expiring">Expiring (30 days)</option>
-              <option value="valid">Valid</option>
+              className="appearance-none pl-4 pr-9 py-2.5 text-sm font-medium text-gray-900 border border-gray-300 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-[#188FA7]/40 focus:border-[#188FA7] shadow-2xs">
+              <option value="" className="text-gray-500">All Expiry</option>
+              <option value="expired" className="text-gray-900">Expired</option>
+              <option value="expiring" className="text-gray-900">Expiring (30 days)</option>
+              <option value="valid" className="text-gray-900">Valid</option>
             </select>
-            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+            <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
           </div>
 
           <div className="relative">
             <select value={stockFilter} onChange={(e) => setStockFilter(e.target.value)}
-              className="appearance-none pl-4 pr-9 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-[#188FA7]/30 focus:border-[#188FA7] text-gray-600">
-              <option value="">All Stock</option>
-              <option value="available">In Stock</option>
-              <option value="out">Out of Stock</option>
+              className="appearance-none pl-4 pr-9 py-2.5 text-sm font-medium text-gray-900 border border-gray-300 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-[#188FA7]/40 focus:border-[#188FA7] shadow-2xs">
+              <option value="" className="text-gray-500">All Stock</option>
+              <option value="available" className="text-gray-900">In Stock</option>
+              <option value="out" className="text-gray-900">Out of Stock</option>
             </select>
-            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+            <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
           </div>
 
           {(search || expiryFilter || stockFilter) && (
@@ -507,20 +507,20 @@ export default function InventoryPage() {
 
               {/* Medicine select */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                <label className="block text-sm font-semibold text-gray-900 mb-1.5">
                   Medicine <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
-                  <Pill className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <Pill className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                   <select required value={form.medicineId} onChange={(e) => setForm({ ...form, medicineId: e.target.value })}
-                    className="w-full appearance-none pl-10 pr-9 py-2.5 text-sm border border-gray-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-[#188FA7]/30 focus:border-[#188FA7] text-gray-700">
-                    <option value="">Select medicine</option>
-                    {medicines.map((m) => <option key={m._id} value={m._id}>{m.name}</option>)}
+                    className="w-full appearance-none pl-10 pr-9 py-2.5 text-sm font-medium text-gray-900 bg-white border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/40 focus:border-[#188FA7] shadow-2xs">
+                    <option value="" className="text-gray-500">Select medicine</option>
+                    {medicines.map((m) => <option key={m._id} value={m._id} className="text-gray-900">{m.name}</option>)}
                   </select>
-                  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+                  <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
                 </div>
                 {medicines.length === 0 && (
-                  <p className="text-xs text-orange-500 mt-1 flex items-center gap-1">
+                  <p className="text-xs text-orange-600 mt-1 flex items-center gap-1 font-medium">
                     <ShieldCheck className="w-3 h-3" /> No active medicines found. Add a medicine first.
                   </p>
                 )}
@@ -528,56 +528,56 @@ export default function InventoryPage() {
 
               {/* Batch number */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                <label className="block text-sm font-semibold text-gray-900 mb-1.5">
                   Batch Number <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
-                  <Hash className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <Hash className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                   <input required type="text" value={form.batchNumber}
                     onChange={(e) => setForm({ ...form, batchNumber: e.target.value })}
                     placeholder="e.g. BCH-2025-001"
-                    className="w-full pl-10 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/30 focus:border-[#188FA7]" />
+                    className="w-full pl-10 pr-4 py-2.5 text-sm font-medium text-gray-900 bg-white placeholder:text-gray-400 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/40 focus:border-[#188FA7] shadow-2xs" />
                 </div>
               </div>
 
               {/* Qty */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                <label className="block text-sm font-semibold text-gray-900 mb-1.5">
                   Quantity <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
-                  <Package className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <Package className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                   <input required type="number" min="0" value={form.quantity}
                     onChange={(e) => setForm({ ...form, quantity: e.target.value })}
                     placeholder="0"
-                    className="w-full pl-10 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/30 focus:border-[#188FA7]" />
+                    className="w-full pl-10 pr-4 py-2.5 text-sm font-medium text-gray-900 bg-white placeholder:text-gray-400 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/40 focus:border-[#188FA7] shadow-2xs" />
                 </div>
               </div>
 
               {/* Prices row */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  <label className="block text-sm font-semibold text-gray-900 mb-1.5">
                     Purchase Price (₹) <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
-                    <IndianRupee className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                    <IndianRupee className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                     <input required type="number" min="0" step="0.01" value={form.purchasePrice}
                       onChange={(e) => setForm({ ...form, purchasePrice: e.target.value })}
                       placeholder="0.00"
-                      className="w-full pl-10 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/30 focus:border-[#188FA7]" />
+                      className="w-full pl-10 pr-4 py-2.5 text-sm font-medium text-gray-900 bg-white placeholder:text-gray-400 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/40 focus:border-[#188FA7] shadow-2xs" />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  <label className="block text-sm font-semibold text-gray-900 mb-1.5">
                     Selling Price (₹) <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
-                    <IndianRupee className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                    <IndianRupee className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                     <input required type="number" min="0" step="0.01" value={form.sellingPrice}
                       onChange={(e) => setForm({ ...form, sellingPrice: e.target.value })}
                       placeholder="0.00"
-                      className="w-full pl-10 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/30 focus:border-[#188FA7]" />
+                      className="w-full pl-10 pr-4 py-2.5 text-sm font-medium text-gray-900 bg-white placeholder:text-gray-400 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/40 focus:border-[#188FA7] shadow-2xs" />
                   </div>
                 </div>
               </div>
@@ -585,24 +585,24 @@ export default function InventoryPage() {
               {/* Dates row */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  <label className="block text-sm font-semibold text-gray-900 mb-1.5">
                     Expiry Date <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
-                    <CalendarDays className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                    <CalendarDays className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                     <input required type="date" min={editTarget ? undefined : minExpiryStr}
                       value={form.expirationDate}
                       onChange={(e) => setForm({ ...form, expirationDate: e.target.value })}
-                      className="w-full pl-10 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/30 focus:border-[#188FA7]" />
+                      className="w-full pl-10 pr-4 py-2.5 text-sm font-medium text-gray-900 bg-white border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/40 focus:border-[#188FA7] shadow-2xs" />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">Received Date</label>
+                  <label className="block text-sm font-semibold text-gray-900 mb-1.5">Received Date</label>
                   <div className="relative">
-                    <CalendarDays className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                    <CalendarDays className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                     <input type="date" max={today} value={form.receivedDate}
                       onChange={(e) => setForm({ ...form, receivedDate: e.target.value })}
-                      className="w-full pl-10 pr-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/30 focus:border-[#188FA7]" />
+                      className="w-full pl-10 pr-4 py-2.5 text-sm font-medium text-gray-900 bg-white border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#188FA7]/40 focus:border-[#188FA7] shadow-2xs" />
                   </div>
                 </div>
               </div>
