@@ -3,19 +3,55 @@ import connectToDatabase from "@/lib/db";
 import { Medicine } from "@/lib/models/Medicine";
 import { Batch } from "@/lib/models/Batch";
 
-// GET: Fetch all inventory
-export async function GET() {
+// GET: Get inventory status (medicines with stock levels)
+export async function GET(request: NextRequest) {
   try {
     await connectToDatabase();
 
-    const batches = await Batch.find()
-      .populate("medicineId")
-      .sort({ expirationDate: 1 });
+    const { searchParams } = new URL(request.url);
+    const search = searchParams.get("search");
+    const status = searchParams.get("status");
+
+    const medicineFilter: Record<string, unknown> = {};
+
+    if (search) {
+      medicineFilter.$or = [
+        { name: { $regex: search, $options: "i" } },
+        { genericName: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    if (status) {
+      medicineFilter.status = status;
+    }
+
+    const medicines = await Medicine.find(medicineFilter).lean();
+    
+    // Get all batches for these medicines
+    const medicineIds = medicines.map(m => m._id);
+    const batches = await Batch.find({ medicineId: { $in: medicineIds } }).lean();
+
+    const inventory = medicines.map(medicine => {
+      const medicineBatches = batches.filter(
+        b => b.medicineId.toString() === medicine._id.toString()
+      );
+
+      const totalStock = medicineBatches.reduce((sum, b) => sum + b.quantity, 0);
+      const totalValue = medicineBatches.reduce((sum, b) => sum + (b.quantity * b.purchasePrice), 0);
+
+      return {
+        ...medicine,
+        totalStock,
+        totalValue,
+        batchCount: medicineBatches.length,
+      };
+    });
 
     return NextResponse.json(
       {
         success: true,
-        data: batches,
+        count: inventory.length,
+        data: inventory,
       },
       { status: 200 }
     );
@@ -26,102 +62,6 @@ export async function GET() {
       {
         success: false,
         message: "Failed to fetch inventory",
-      },
-      { status: 500 }
-    );
-  }
-}
-
-// POST: Add new inventory batch
-export async function POST(request: NextRequest) {
-  try {
-    await connectToDatabase();
-
-    const body = await request.json();
-
-    const {
-      medicineId,
-      batchNumber,
-      quantity,
-      purchasePrice,
-      sellingPrice,
-      expirationDate,
-      receivedDate,
-    } = body;
-
-    // Check required fields
-    if (
-      !medicineId ||
-      !batchNumber ||
-      quantity === undefined ||
-      purchasePrice === undefined ||
-      sellingPrice === undefined ||
-      !expirationDate
-    ) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Required fields are missing",
-        },
-        { status: 400 }
-      );
-    }
-
-    // Check whether medicine exists
-    const medicine = await Medicine.findById(medicineId);
-
-    if (!medicine) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Medicine not found",
-        },
-        { status: 404 }
-      );
-    }
-
-    // Check duplicate batch number
-    const existingBatch = await Batch.findOne({ batchNumber });
-
-    if (existingBatch) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Batch number already exists",
-        },
-        { status: 409 }
-      );
-    }
-
-    // Create new batch
-    const batch = await Batch.create({
-      medicineId,
-      batchNumber,
-      quantity,
-      purchasePrice,
-      sellingPrice,
-      expirationDate,
-      receivedDate,
-    });
-
-    // Return batch with medicine information
-    const populatedBatch = await batch.populate("medicineId");
-
-    return NextResponse.json(
-      {
-        success: true,
-        message: "Inventory added successfully",
-        data: populatedBatch,
-      },
-      { status: 201 }
-    );
-  } catch (error) {
-    console.error("Inventory POST error:", error);
-
-    return NextResponse.json(
-      {
-        success: false,
-        message: "Failed to add inventory",
       },
       { status: 500 }
     );

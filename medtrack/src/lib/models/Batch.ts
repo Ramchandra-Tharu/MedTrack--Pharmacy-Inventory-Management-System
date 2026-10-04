@@ -47,5 +47,11 @@ const BatchSchema = new Schema(
   }
 );
 
+// Prevent duplicate batch numbers for the same medicine
+BatchSchema.index(
+  { medicineId: 1, batchNumber: 1 },
+  { unique: true }
+);
+
 export const Batch =
   models.Batch || model("Batch", BatchSchema);

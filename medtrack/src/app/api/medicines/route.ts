@@ -1,23 +1,63 @@
 import { NextRequest, NextResponse } from "next/server";
+
 import connectToDatabase from "@/lib/db";
 import { Medicine } from "@/lib/models/Medicine";
 
-// GET: Fetch all medicines
-export async function GET() {
+// GET: Get medicines with filters
+export async function GET(request: NextRequest) {
     try {
         await connectToDatabase();
 
-        const medicines = await Medicine.find().sort({ createdAt: -1 });
+        const { searchParams } = new URL(request.url);
+
+        const search = searchParams.get("search");
+        const category = searchParams.get("category");
+        const status = searchParams.get("status");
+
+        const filter: Record<string, unknown> = {};
+
+        // Search by medicine name or generic name
+        if (search) {
+            filter.$or = [
+                {
+                    name: {
+                        $regex: search,
+                        $options: "i",
+                    },
+                },
+                {
+                    genericName: {
+                        $regex: search,
+                        $options: "i",
+                    },
+                },
+            ];
+        }
+
+        // Filter by category
+        if (category) {
+            filter.category = category;
+        }
+
+        // Filter by status
+        if (status) {
+            filter.status = status;
+        }
+
+        const medicines = await Medicine.find(filter).sort({
+            createdAt: -1,
+        });
 
         return NextResponse.json(
             {
                 success: true,
+                count: medicines.length,
                 data: medicines,
             },
             { status: 200 }
         );
     } catch (error) {
-        console.error("Medicine GET error:", error);
+        console.error("Medicines GET error:", error);
 
         return NextResponse.json(
             {
@@ -29,7 +69,7 @@ export async function GET() {
     }
 }
 
-// POST: Add a new medicine
+// POST: Create a new medicine
 export async function POST(request: NextRequest) {
     try {
         await connectToDatabase();
@@ -46,7 +86,7 @@ export async function POST(request: NextRequest) {
             status,
         } = body;
 
-        // Check required fields
+        // Validate required fields
         if (!name || !category) {
             return NextResponse.json(
                 {
@@ -57,16 +97,29 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Check duplicate medicine
+        const trimmedName = name.trim();
+        const trimmedCategory = category.trim();
+
+        if (!trimmedName || !trimmedCategory) {
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: "Medicine name and category cannot be empty",
+                },
+                { status: 400 }
+            );
+        }
+
+        // Check duplicate medicine name
         const existingMedicine = await Medicine.findOne({
-            name: name.trim(),
+            name: trimmedName,
         });
 
         if (existingMedicine) {
             return NextResponse.json(
                 {
                     success: false,
-                    message: "Medicine already exists",
+                    message: "Medicine with this name already exists",
                 },
                 { status: 409 }
             );
@@ -74,13 +127,14 @@ export async function POST(request: NextRequest) {
 
         // Create medicine
         const medicine = await Medicine.create({
-            name: name.trim(),
-            genericName,
-            description,
-            category: category.trim(),
-            manufacturer,
-            prescriptionRequired,
-            status,
+            name: trimmedName,
+            genericName: genericName?.trim(),
+            description: description?.trim(),
+            category: trimmedCategory,
+            manufacturer: manufacturer?.trim(),
+            prescriptionRequired:
+                prescriptionRequired ?? false,
+            status: status ?? "active",
         });
 
         return NextResponse.json(
@@ -92,7 +146,7 @@ export async function POST(request: NextRequest) {
             { status: 201 }
         );
     } catch (error) {
-        console.error("Medicine POST error:", error);
+        console.error("Medicines POST error:", error);
 
         return NextResponse.json(
             {
